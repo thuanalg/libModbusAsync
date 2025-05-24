@@ -133,3 +133,4 @@ target_link_libraries(ModbusAsync
 	serialmodule
 	simplelog
 )
+#cmake .. -DUNIX_LINUX=1 -DHEADER_SIMPLELOG=/usr/local/include -DLIB_PATH_SIMPLELOG=/usr/local/lib -DHEADER_SERIALMODULE=/usr/local/include -DLIB_PATH_SERIALMODULE=/usr/local/lib 
