@@ -27,17 +27,17 @@
 	{                                                                      \
 		(__obj__) = (__type__ *)malloc(__nn__);                        \
 		if (__obj__) {                                                 \
-			spllog(0, "[MEM] Malloc: 0x%p.", (__obj__));           \
+			spllog(0, "[MEM] mdba-Malloc: 0x%p.", (__obj__));           \
 			memset((__obj__), 0, (__nn__));                        \
 		} else {                                                       \
-			spllog(0, "Malloc: error.");                           \
+			spllog(0, "mdba-Malloc: error.");                           \
 		}                                                              \
 	}
 
 #define mdba_free(__obj__)                                                     \
 	{                                                                      \
 		if (__obj__) {                                                 \
-			spllog(0, "[MEM] Free: 0x%p.", (__obj__));             \
+			spllog(0, "[MEM] mdba-Free: 0x%p.", (__obj__));             \
 			free(__obj__);                                         \
 			(__obj__) = 0;                                         \
 		}                                                              \
