@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
-project(serial_module_project)
+project(modbus_async_project)
 
 # === Sources ===
-set(SOURCE_LIB_MODULE_FILES src/serialmodule.c)
+set(SOURCE_LIB_MODBUS_ASYNC_FILES src/ModbusAsync.c)
 set(SOURCE_TEST_MODULE_FILES tests/console/main.c)
 set(SOURCE_MFC_MODULE_FILES 
 	tests/testMFC/testSerialPort/testSerialPort/framework.h
@@ -23,27 +23,27 @@ set(SOURCE_MFC_MODULE_FILES
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # === Define shared library ===
-add_library(serialmodule SHARED ${SOURCE_LIB_MODULE_FILES})
+add_library(ModbusAsync SHARED ${SOURCE_LIB_MODBUS_ASYNC_FILES})
 
 # === Platform-specific defines ===
 if(DEFINED UNIX_LINUX)
-	target_compile_definitions(serialmodule PUBLIC UNIX_LINUX=1)
+	target_compile_definitions(ModbusAsync PUBLIC UNIX_LINUX=1)
 	if(DEFINED MACOSX)
-		target_compile_definitions(serialmodule PUBLIC __MACH__=1)
+		target_compile_definitions(ModbusAsync PUBLIC __MACH__=1)
 	else()
-		target_compile_definitions(serialmodule PUBLIC __SPSR_EPOLL__=1)
+		target_compile_definitions(ModbusAsync PUBLIC __SPSR_EPOLL__=1)
 	endif()
-	set_target_properties(serialmodule PROPERTIES VERSION 1.0.7 SOVERSION 1)
+	set_target_properties(ModbusAsync PROPERTIES VERSION 1.0.0 SOVERSION 1)
 else()
-	target_compile_definitions(serialmodule PUBLIC EXPORT_DLL_API_SERIAL_MODULE=1)
-	target_compile_definitions(serialmodule PUBLIC _CRT_SECURE_NO_WARNINGS=1)
+	target_compile_definitions(ModbusAsync PUBLIC EXPORT_DLL_API_SERIAL_MODULE=1)
+	target_compile_definitions(ModbusAsync PUBLIC _CRT_SECURE_NO_WARNINGS=1)
 endif()
 
 # === Link SimpleLog if not in embedded environment ===
 if(NOT DEFINED META_OPENEMBEDDED)
 	if(DEFINED HEADER_SIMPLELOG)
 		message(STATUS "Using SimpleLog header at: ${HEADER_SIMPLELOG}")
-		target_include_directories(serialmodule PUBLIC "${HEADER_SIMPLELOG}")
+		target_include_directories(ModbusAsync PUBLIC "${HEADER_SIMPLELOG}")
 	else()
 		message(FATAL_ERROR
 			"\n[SimpleLog Missing]\n"
@@ -56,7 +56,7 @@ if(NOT DEFINED META_OPENEMBEDDED)
 
 	if(DEFINED LIB_PATH_SIMPLELOG)
 		message(STATUS "Using SimpleLog library path: ${LIB_PATH_SIMPLELOG}")
-		target_link_directories(serialmodule PUBLIC "${LIB_PATH_SIMPLELOG}")
+		target_link_directories(ModbusAsync PUBLIC "${LIB_PATH_SIMPLELOG}")
 	else()
 		message(FATAL_ERROR
 			"\n[SimpleLog Missing]\n"
@@ -68,40 +68,42 @@ if(NOT DEFINED META_OPENEMBEDDED)
 	endif()
 endif()
 
-# === Executable: test_serial_module (pure C) ===
-add_executable(test_serial_module ${SOURCE_TEST_MODULE_FILES})
+# === Executable: test_ModbusAsync (pure C) ===
+add_executable(test_ModbusAsync ${SOURCE_TEST_MODULE_FILES})
 if(DEFINED UNIX_LINUX)
-	target_compile_definitions(test_serial_module PUBLIC UNIX_LINUX=1)
+	target_compile_definitions(test_ModbusAsync PUBLIC UNIX_LINUX=1)
 else()
-	target_compile_definitions(test_serial_module PUBLIC _CRT_SECURE_NO_WARNINGS=1 )
+	target_compile_definitions(test_ModbusAsync PUBLIC _CRT_SECURE_NO_WARNINGS=1 )
 endif()
 
-target_link_libraries(test_serial_module 
+target_link_libraries(test_ModbusAsync 
 	simplelog
-	serialmodule
+	ModbusAsync
 )
 
 # === Visual Studio only: include existing .vcxproj ===
 if(MSVC)
-	add_executable(testMFCSerialPort WIN32 ${SOURCE_MFC_MODULE_FILES})
-	target_compile_definitions(testMFCSerialPort PUBLIC _CRT_SECURE_NO_WARNINGS=1 _AFXDLL=1)
-	target_link_libraries(testMFCSerialPort 
+	add_executable(testMFCModbusAsync WIN32 ${SOURCE_MFC_MODULE_FILES})
+	target_compile_definitions(testMFCModbusAsync PUBLIC _CRT_SECURE_NO_WARNINGS=1 _AFXDLL=1)
+	target_link_libraries(testMFCModbusAsync 
 		simplelog
 		serialmodule
+		ModbusAsync
 	)	
 	# Enable MFC
-	set_target_properties(testMFCSerialPort PROPERTIES
+	set_target_properties(testMFCModbusAsync PROPERTIES
 	    USES_MFC 2
 	)	
 endif()
 
 # === Installation section for Unix/Linux ===
 if(DEFINED UNIX_LINUX)
-	install(TARGETS serialmodule LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-	install(FILES include/serialmodule.h DESTINATION include)
+	install(TARGETS ModbusAsync LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+	install(FILES include/ModbusAsync.h DESTINATION include)
 endif()
 
-# === Link for serialmodule ===
-target_link_libraries(serialmodule 
+# === Link for ModbusAsync ===
+target_link_libraries(ModbusAsync 
+	serialmodule
 	simplelog
 )
