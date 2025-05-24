@@ -16,8 +16,8 @@ This library provides a multi-threaded, cross-platform solution for managing mul
 
 
 ### Dependencies  
-- Windows: [simplelog-topic](https://github.com/thuanalg/simplelog-topic)  
-- Unix-Like(Linux/MacOSX): [simplelog-topic](https://github.com/thuanalg/simplelog-topic) + [BSD socket](https://linux.die.net/man/7/socket)  
+- Windows: [simplelog-topic](https://github.com/thuanalg/simplelog-topic) + [libserialmodule](https://github.com/thuanalg/libserialmodule) 
+- Unix-Like(Linux/MacOSX): [simplelog-topic](https://github.com/thuanalg/simplelog-topic) + [BSD socket](https://linux.die.net/man/7/socket)  + [libserialmodule](https://github.com/thuanalg/libserialmodule) 
 
 ### [INSTALL](https://github.com/thuanalg/libserialmodule/blob/main/INSTALL.md)  
 
