@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <serialmodule.h>
 
-#if 0
+#if 1
 #ifndef UNIX_LINUX
 #define UNIX_LINUX               
 #endif
@@ -70,6 +70,25 @@ extern "C" {
 #ifndef MDBA_UNIT
 #define MDBA_UNIT                unsigned int
 #endif
+
+#ifndef MDBA_UCHAR
+#define MDBA_UCHAR               unsigned char
+#endif
+
+#ifndef MDBA_RESERVE
+#define MDBA_RESERVE             4
+#endif
+
+#ifndef MDBA_CRC2
+#define MDBA_CRC2                2
+#endif
+
+typedef struct {
+	int total;
+	MDBA_UCHAR slave_id;
+	MDBA_UCHAR fcode;
+	char data[0];
+};
 
 /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 
