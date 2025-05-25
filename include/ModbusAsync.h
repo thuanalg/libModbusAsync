@@ -75,12 +75,16 @@ extern "C" {
 #define MDBA_UCHAR               unsigned char
 #endif
 
+#ifndef MDBA_USHORT
+#define MDBA_USHORT              unsigned short
+#endif
+
 #ifndef MDBA_RESERVE
 #define MDBA_RESERVE             4
 #endif
-
-#ifndef MDBA_CRC2
-#define MDBA_CRC2                2
+/*CRC 16 bit, big-endian*/
+#ifndef MDBA_CRC16
+#define MDBA_CRC16               2
 #endif
 
 typedef struct __MDBA_FRAME_ST__ {
