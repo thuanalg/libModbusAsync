@@ -42,3 +42,18 @@ mdba_err_txt(int i)
 	return "";
 }
 /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
+void
+mdba_dump_byte(MDBA_UCHAR *data, int len)
+{
+	int i = 0;
+	int n = 0;
+	char buff[256 + 1] = {0};
+	int step = 0;
+
+	for (i = 0; i < len; ++i) {
+		step +=
+		    snprintf(buff + step, 256 - step, "0x%.2x ", (int)data[i]);
+	}
+	spllog(0, "%s", buff);
+}
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/

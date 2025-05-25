@@ -123,6 +123,9 @@ mdba_slav_scan(char *port);
 
 DLL_API_MODBUS_ASYNC const char *
 mdba_err_txt(int);
+
+DLL_API_MODBUS_ASYNC void
+mdba_dump_byte(MDBA_UCHAR *data, int len);
 /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 #ifdef __cplusplus
 }
