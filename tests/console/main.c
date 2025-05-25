@@ -66,8 +66,35 @@ spsr_test_callback(void *data)
 		if (evt->type == SPSR_EVENT_READ_BUF) {
 			/* Read data.*/
 			spllog(0,
-			    "SPSR_EVENT_READ_BUF, realdata: %s, datalen: %d",
+			    "----SPSR_EVENT_READ_BUF, realdata: %s, datalen: "
+			    "%d",
 			    realdata, datalen);
+			if ((*(realdata + 1)) < 0x81) {
+				MDBA_UCHAR *p = (MDBA_UCHAR *)realdata;
+				char tmp[16] = {0};
+				int heat = 0, humidity = 0;
+				int count = 0;
+
+				count = snprintf(tmp, 16, "0x%.2x%.2x",
+				    (*(p + 3)), (*(p + 4)));
+				if (count > 0) {
+					count = sscanf(tmp, "%x", &heat);
+					if (count > 0) {
+						spllog(0, "-->> heat:  %.2f.",
+						    ((float)heat) / 10.00);
+					}
+				}
+				memset(tmp, 0, sizeof(tmp));
+				count = snprintf(tmp, 16, "0x%.2x%.2x",
+				    (*(p + 5)), (*(p + 6)));
+				if (count > 0) {
+					count = sscanf(tmp, "%x", &humidity);
+					if (count > 0) {
+						spllog(0, "-->>humidity: %.2f.",
+						    ((float)humidity) / 10.00);
+					}
+				}
+			}
 			mdba_dump_byte(realdata, datalen);
 			break;
 		}
