@@ -83,12 +83,27 @@ extern "C" {
 #define MDBA_CRC2                2
 #endif
 
-typedef struct {
+typedef struct __MDBA_FRAME_ST__ {
 	int total;
 	MDBA_UCHAR slave_id;
 	MDBA_UCHAR fcode;
 	char data[0];
-};
+} MDBA_FRAME_ST;
+/*total = sizeof(MDBA_FRAME_ST) + sizeof(data) +  MDBA_CRC2 + MDBA_RESERVE;*/
+#define mdba_malloc_frame(__nn__, __obj__)                                     \
+	{                                                                      \
+		int __tsz__ =                                                  \
+		    __nn__ + sizeof(MDBA_FRAME_ST) + MDBA_CRC2 + MDBA_RESERVE; \
+		(__obj__) = (MDBA_FRAME_ST *)malloc(__tsz__);                  \
+		if (__obj__) {                                                 \
+			spllog(0, "[MEM] Malloc-mdba: 0x%p.", (__obj__));      \
+			memset((__obj__), 0, (__tsz__));                       \
+			__obj__->total = __tsz__;                              \
+		} else {                                                       \
+			spllog(0, "Malloc-mdba: error.");                      \
+		}                                                              \
+	}
+
 /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 const MDBA_UCHAR mdba_byte_ON[] = {
     0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
