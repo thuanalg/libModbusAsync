@@ -103,7 +103,7 @@ spsr_test_callback(void *data)
 			spllog(0,
 			    "SPSR_EVENT_WRITE_OK, realdata: %s, datalen: %d",
 			    realdata, datalen);
-			mdba_dump_byte(realdata, datalen);
+			/* mdba_dump_byte(realdata, datalen); */
 			break;
 		}
 		if (evt->type == SPSR_EVENT_WRITE_ERROR) {
