@@ -118,8 +118,8 @@ const MDBA_UCHAR mdba_byte_OFF[] = {0xFF - 0x01, 0xFF - 0x02, 0xFF - 0x04,
 
 /*Must be started before using. Thread-safe, but should be at a start of main
  * function.*/
-DLL_API_MODBUS_ASYNC int
-mdba_slav_scan(char *port);
+DLL_API_MODBUS_ASYNC MDBA_USHORT
+mdba_crc16(const MDBA_UCHAR *data, MDBA_USHORT length);
 
 DLL_API_MODBUS_ASYNC const char *
 mdba_err_txt(int);

@@ -1,10 +1,8 @@
 #include <ModbusAsync.h>
 #include <stdint.h>
+
 /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
-static MDBA_USHORT
-mdba_crc16(const MDBA_UCHAR *data, MDBA_USHORT length);
-/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
-static MDBA_USHORT
+MDBA_USHORT
 mdba_crc16(const MDBA_UCHAR *data, MDBA_USHORT length)
 {
 	MDBA_USHORT crc = 0xFFFF;
@@ -26,15 +24,6 @@ mdba_crc16(const MDBA_UCHAR *data, MDBA_USHORT length)
 	return crc;
 }
 
-/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
-int
-mdba_slav_scan(char *port)
-{
-	int ret = 0;
-	do {
-	} while (0);
-	return ret;
-}
 /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 const char *
 mdba_err_txt(int i)
