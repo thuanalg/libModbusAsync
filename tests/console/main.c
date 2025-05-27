@@ -80,7 +80,7 @@ spsr_test_callback(void *data)
 				if (count > 0) {
 					count = sscanf(tmp, "%x", &heat);
 					if (count > 0) {
-						spllog(0, "-->> heat:  %.2f.",
+						spllog(2, "-->> heat:  %.2f.",
 						    ((float)heat) / 10.00);
 					}
 				}
@@ -90,7 +90,7 @@ spsr_test_callback(void *data)
 				if (count > 0) {
 					count = sscanf(tmp, "%x", &humidity);
 					if (count > 0) {
-						spllog(0, "-->>humidity: %.2f.",
+						spllog(2, "-->>humidity: %.2f.",
 						    ((float)humidity) / 10.00);
 					}
 				}
@@ -108,7 +108,7 @@ spsr_test_callback(void *data)
 		}
 		if (evt->type == SPSR_EVENT_WRITE_ERROR) {
 			/* Port name .*/
-			spllog(0,
+			spllog(4,
 			    "SPSR_EVENT_WRITE_ERROR|%s, realdata: %s, datalen: "
 			    "%d",
 			    spsr_err_txt(evt->err_code), realdata, datalen);
@@ -243,7 +243,10 @@ main(int argc, char *argv[])
 		}
 		/* Open a port . */
 		ret = spsr_inst_open(&obj);
-
+		if(ret) {
+			exit(1);
+		} 
+		spllog(0, "DID open ==========================: %s.", obj.port_name);
 		p = strtok(NULL, ",");
 		// spl_sleep(5);
 		++i;
