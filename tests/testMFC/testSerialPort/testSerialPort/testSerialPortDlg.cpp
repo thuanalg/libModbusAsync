@@ -369,7 +369,7 @@ void CtestSerialPortDlg::OnBnClickedButtonAdd()
 	snprintf(obj.port_name, SPSR_PORT_LEN, port);
 	obj.cb_evt_fn = callback_to_GUI;
 	obj.cb_obj = this->m_hWnd;
-	obj.checkDSR = 0;
+	obj.offDSR = 1;
 	spllog(SPL_LOG_INFO, "this->m_hWnd: 0x%p.", this->m_hWnd);
 
 	obj.t_delay = 100;
