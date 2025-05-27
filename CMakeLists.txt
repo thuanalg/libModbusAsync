@@ -4,20 +4,20 @@ project(modbus_async_project)
 # === Sources ===
 set(SOURCE_LIB_MODBUS_ASYNC_FILES src/ModbusAsync.c)
 set(SOURCE_TEST_MODULE_FILES tests/console/main.c)
-#set(SOURCE_MFC_MODULE_FILES 
-#	tests/testMFC/testSerialPort/testSerialPort/framework.h
-#	tests/testMFC/testSerialPort/testSerialPort/pch.cpp
-#	tests/testMFC/testSerialPort/testSerialPort/pch.h
-#	tests/testMFC/testSerialPort/testSerialPort/resource.h
-#	tests/testMFC/testSerialPort/testSerialPort/targetver.h
-#	tests/testMFC/testSerialPort/testSerialPort/testSerialPort.cpp
-#	tests/testMFC/testSerialPort/testSerialPort/testSerialPort.h
-#	tests/testMFC/testSerialPort/testSerialPort/testSerialPort.rc
-#	tests/testMFC/testSerialPort/testSerialPort/testSerialPortDlg.cpp
-#	tests/testMFC/testSerialPort/testSerialPort/testSerialPortDlg.h
-#	tests/testMFC/testSerialPort/testSerialPort/res/testSerialPort.ico
-#	tests/testMFC/testSerialPort/testSerialPort/res/testSerialPort.rc2
-#)
+set(SOURCE_MFC_MODULE_FILES 
+	tests/testMFC/testSerialPort/testSerialPort/framework.h
+	tests/testMFC/testSerialPort/testSerialPort/pch.cpp
+	tests/testMFC/testSerialPort/testSerialPort/pch.h
+	tests/testMFC/testSerialPort/testSerialPort/resource.h
+	tests/testMFC/testSerialPort/testSerialPort/targetver.h
+	tests/testMFC/testSerialPort/testSerialPort/testSerialPort.cpp
+	tests/testMFC/testSerialPort/testSerialPort/testSerialPort.h
+	tests/testMFC/testSerialPort/testSerialPort/testSerialPort.rc
+	tests/testMFC/testSerialPort/testSerialPort/testSerialPortDlg.cpp
+	tests/testMFC/testSerialPort/testSerialPort/testSerialPortDlg.h
+	tests/testMFC/testSerialPort/testSerialPort/res/testSerialPort.ico
+	tests/testMFC/testSerialPort/testSerialPort/res/testSerialPort.rc2
+)
 
 # === Include main headers ===
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -108,19 +108,19 @@ target_link_libraries(test_ModbusAsync
 )
 
 # === Visual Studio only: include existing .vcxproj ===
-#if(MSVC)
-#	add_executable(testMFCModbusAsync WIN32 ${SOURCE_MFC_MODULE_FILES})
-#	target_compile_definitions(testMFCModbusAsync PUBLIC _CRT_SECURE_NO_WARNINGS=1 _AFXDLL=1)
-#	target_link_libraries(testMFCModbusAsync 
-#		simplelog
-#		serialmodule
-#		ModbusAsync
-#	)	
-#	# Enable MFC
-#	set_target_properties(testMFCModbusAsync PROPERTIES
-#	    USES_MFC 2
-#	)	
-#endif()
+if(MSVC)
+	add_executable(testMFCModbusAsync WIN32 ${SOURCE_MFC_MODULE_FILES})
+	target_compile_definitions(testMFCModbusAsync PUBLIC _CRT_SECURE_NO_WARNINGS=1 _AFXDLL=1)
+	target_link_libraries(testMFCModbusAsync 
+		simplelog
+		serialmodule
+		ModbusAsync
+	)	
+	# Enable MFC
+	set_target_properties(testMFCModbusAsync PROPERTIES
+	    USES_MFC 2
+	)	
+endif()
 
 # === Installation section for Unix/Linux ===
 if(DEFINED UNIX_LINUX)
