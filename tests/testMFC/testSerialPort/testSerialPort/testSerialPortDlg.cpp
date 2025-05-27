@@ -274,13 +274,18 @@ void CtestSerialPortDlg::OnBnClickedButtonmsg()
 	int i = 0;
 	std::list<void *>::iterator it = m_listPort.begin();
 	n = cdata.GetLength();
-	if (!n) { return; }
+#if 0
+	if (!n) { 
+		return; 
+	}
 	if (n) {
 		for (i = 0; i < n; ++i) {
 			data[i] = (char)cdata[i];
 		}
 	}
+#endif
 	/*----------------------------------------------------------------------------------------*/
+#if 1
 	p_CWCom->GetWindowText(cdata);
 	n = cdata.GetLength();
 	if (!n) { return; }
@@ -289,6 +294,7 @@ void CtestSerialPortDlg::OnBnClickedButtonmsg()
 			portport[i] = (char)cdata[i];
 		}
 	}
+#endif
 	/*----------------------------------------------------------------------------------------*/
 	//n = m_listPort.size();
 	//for (i = 0; i < n; ++i) {
@@ -299,7 +305,12 @@ void CtestSerialPortDlg::OnBnClickedButtonmsg()
 	//		spserial_inst_write_to_port(item, data, strlen(data));
 	//	}
 	//}
-	spsr_inst_write(portport, data, strlen(data));
+	MDBA_UCHAR text_data[] = {
+	    0x01, 0x03, 0x00, 0x00, 0x00, 0x02,
+	    0xC4, // 0xC4
+	    0x0B, // 0x0B
+	};
+	spsr_inst_write(portport, (char*) text_data, sizeof(text_data));
 }
 
 
@@ -358,12 +369,15 @@ void CtestSerialPortDlg::OnBnClickedButtonAdd()
 	snprintf(obj.port_name, SPSR_PORT_LEN, port);
 	obj.cb_evt_fn = callback_to_GUI;
 	obj.cb_obj = this->m_hWnd;
-	obj.checkDSR = 1;
+	obj.checkDSR = 0;
 	spllog(SPL_LOG_INFO, "this->m_hWnd: 0x%p.", this->m_hWnd);
-	/*obj.baudrate = 115200;*/
-	//obj.baudrate = 115200;
+
 	obj.t_delay = 100;
+#if 0
 	obj.baudrate = 115200;
+#else
+	obj.baudrate = 9600;
+#endif
 	if (ret) {
 		exit(EXIT_FAILURE);
 	}

@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <serialmodule.h>
 
-#if 1
+#if 0
 #ifndef UNIX_LINUX
 #define UNIX_LINUX               
 #endif

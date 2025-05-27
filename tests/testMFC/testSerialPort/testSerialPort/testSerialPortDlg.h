@@ -1,7 +1,7 @@
 
 // testSerialPortDlg.h : header file
 //
-#include "serialmodule.h"
+#include "ModbusAsync.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <list>
