@@ -244,10 +244,11 @@ main(int argc, char *argv[])
 		}
 		/* Open a port . */
 		ret = spsr_inst_open(&obj);
-		if(ret) {
+		if (ret) {
 			exit(1);
-		} 
-		spllog(0, "DID open ==========================: %s.", obj.port_name);
+		}
+		spllog(0, "DID open ==========================: %s.",
+		    obj.port_name);
 		p = strtok(NULL, ",");
 		// spl_sleep(5);
 		++i;
