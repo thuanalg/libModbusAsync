@@ -1,8 +1,10 @@
-##1. Modbus RTU Frame (via RS-232/RS-485):  
-+--------------+--------------+--------------+--------------+-------------+  
-| Slave Address| Function Code|   Data       | CRC Checksum |   Silent    |  
-|   (1 byte)   |   (1 byte)   | (N bytes)    |   (2 bytes)  | Interval(s) |  
-+--------------+--------------+--------------+--------------+-------------+  
+###1. Modbus RTU Frame (via RS-232/RS-485):  
+
+| Slave Address | Function Code|   Data       | CRC Checksum |   Silent    |  
+| ------------- | ------------ | ------------ | ------------ | ----------- |  
+|   (1 byte)    |   (1 byte)   | (N bytes)    |   (2 bytes)  | Interval(s) |  
+| ------------- | ------------ | ------------ | ------------ | ----------- |  
+  
 - RTU: Remote Termimal Unit.  
   
 ###2. Function code:   
