@@ -297,7 +297,8 @@ update_ui(void *data)
 						snprintf(text, GTK_TEST_BUF,
 						    "SPSR_EVENT_READ_BUF, "
 						    "(heat, humidity)="
-						    "[%.2f, %.2f], datalen: "
+						    "[ %.2f°C, %.2f%% ], "
+						    "datalen: "
 						    "%d, time:%llu\t\t\t",
 						    ((float)heat) / 10.00,
 						    ((float)humidity) / 10.00,
