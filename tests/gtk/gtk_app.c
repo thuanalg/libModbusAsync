@@ -296,11 +296,12 @@ update_ui(void *data)
 					if (isOK) {
 						snprintf(text, GTK_TEST_BUF,
 						    "SPSR_EVENT_READ_BUF, "
-						    "heat: %.2f, humidity: "
-						    "%.2f, datalen: %d",
+						    "(heat, humidity)="
+						    "[%.2f, %.2f], datalen: "
+						    "%d, time:%llu\t\t\t",
 						    ((float)heat) / 10.00,
 						    ((float)humidity) / 10.00,
-						    datalen);
+						    datalen, (LLU)time(0));
 					}
 				}
 
@@ -312,8 +313,8 @@ update_ui(void *data)
 				/* Port name .*/
 				snprintf(text, GTK_TEST_BUF,
 				    "SPSR_EVENT_WRITE_OK, realdata: %s, "
-				    "datalen: %d",
-				    realdata, datalen);
+				    "datalen: %d, time:%llu\t",
+				    realdata, datalen, (LLU)time(0));
 				break;
 			}
 			if (evt->type == SPSR_EVENT_WRITE_ERROR) {
