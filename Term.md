@@ -6,11 +6,11 @@
 |   [11]        |   [03]       | [00] [6B] [00] [03]    |   [CRC_L] [CRC_H]  | Interval(s) |  
   
 [11] [03] [00] [6B] [00] [03] [CRC_L] [CRC_H]  
-|-----|    |	     | 		└─ CRC-16 (Low byte first)  
-|-----|    |         └──────── Quantity = 3 registers  
-|-----|    |  
-|-----|    |  
-|-----|    └───────────── Start address = 0x006B  
+|-----|----|---------|----------└─ CRC-16 (Low byte first)  
+|-----|----|---------└──────── Quantity = 3 registers  
+|-----|----|  
+|-----|----|  
+|-----|----└───────────── Start address = 0x006B  
 |-----└────────────────── Function Code = 0x03 (Read Holding Registers)  
 |  
 └─────────────────────── Slave Address = 0x11  
