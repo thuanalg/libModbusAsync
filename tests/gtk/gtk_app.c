@@ -23,7 +23,7 @@ static gboolean
 update_ui(gpointer data);
 GtkWidget *entries[7];
 void *arr_obj[10];
-
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 void
 on_button_clicked_add(GtkWidget *widget, gpointer data)
 {
@@ -61,6 +61,7 @@ on_button_clicked_add(GtkWidget *widget, gpointer data)
 	}
 	spsr_free(obj);
 }
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 void
 on_button_clicked_close(GtkWidget *widget, gpointer data)
 {
@@ -69,6 +70,7 @@ on_button_clicked_close(GtkWidget *widget, gpointer data)
 	spllog(0, "Button %s clicked!\n", (char *)data);
 	ret = spsr_inst_close((char *)portname);
 }
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 void
 on_button_clicked_write(GtkWidget *widget, gpointer data)
 {
@@ -80,8 +82,12 @@ on_button_clicked_write(GtkWidget *widget, gpointer data)
 	    0x00, // 0xC4
 	    0x00, // 0x0B
 	};
+
+	MDBA_UCHAR slaveID[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07};
+
 	pcrc = text_data + sizeof(text_data) - 2;
 	int i = 0;
+	text_data[0] = slaveID[time(0)% sizeof(slaveID)];
 	MDBA_USHORT crc16 = mdba_crc16(text_data, sizeof(text_data) - 2);
 	pcrc[0] = crc16 & 0xFF;
 	pcrc[1] = (crc16 >> 8) & 0xFF;
@@ -103,6 +109,7 @@ on_button_clicked_write(GtkWidget *widget, gpointer data)
 
 	spllog(0, "ret %d!\n", ret);
 }
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 int
 main(int argc, char *argv[])
 {
@@ -225,6 +232,7 @@ main(int argc, char *argv[])
 	return 0;
 }
 #define GTK_TEST_BUF   1024
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 gboolean
 update_ui(void *data)
 {
@@ -373,7 +381,7 @@ update_ui(void *data)
 	spsr_free(evt);
 	return FALSE;
 }
-
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 int
 spsr_call_back_read(void *data)
 {
@@ -390,7 +398,7 @@ spsr_call_back_read(void *data)
 	// spsr_free(evt);
 	return 0;
 }
-
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 int
 spsr_test_callback(void *data)
 {
@@ -421,3 +429,4 @@ spsr_test_callback(void *data)
 
 	return 0;
 }
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
