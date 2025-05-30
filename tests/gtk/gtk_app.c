@@ -87,7 +87,7 @@ on_button_clicked_write(GtkWidget *widget, gpointer data)
 
 	pcrc = text_data + sizeof(text_data) - 2;
 	int i = 0;
-	text_data[0] = slaveID[time(0)% sizeof(slaveID)];
+	text_data[0] = slaveID[time(0) % sizeof(slaveID)];
 	MDBA_USHORT crc16 = mdba_crc16(text_data, sizeof(text_data) - 2);
 	pcrc[0] = crc16 & 0xFF;
 	pcrc[1] = (crc16 >> 8) & 0xFF;
