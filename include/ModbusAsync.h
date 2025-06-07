@@ -110,7 +110,11 @@ typedef struct __MDBA_FRAME_ST__ {
 
 /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 const MDBA_UCHAR mdba_byte_ON[] = {
+#if 1
     0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
+#else
+    1 << 0, 1 << 1, 1 << 2, 1 << 3, 1 << 4, 1 << 5, 1 << 6, 1 << 7};
+#endif
 
 const MDBA_UCHAR mdba_byte_OFF[] = {
 	~0x01, 
