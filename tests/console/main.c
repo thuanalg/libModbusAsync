@@ -244,10 +244,11 @@ main(int argc, char *argv[])
 		}
 		/* Open a port . */
 		ret = spsr_inst_open(&obj);
-		if(ret) {
+		if (ret) {
 			exit(1);
-		} 
-		spllog(0, "DID open ==========================: %s.", obj.port_name);
+		}
+		spllog(0, "DID open ==========================: %s.",
+		    obj.port_name);
 		p = strtok(NULL, ",");
 		// spl_sleep(5);
 		++i;
@@ -303,18 +304,30 @@ void *
 test_try_to_write(void *arg)
 #endif
 {
+	int i = 0;
+	int r = 0;
 	MDBA_UCHAR *pcrc = 0;
+#if 0
+	MDBA_UCHAR slaveID[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+	    0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10};
+#else
+	MDBA_UCHAR slaveID[] = {0x01, 0x02, 0x03};		
+#endif
 	MDBA_UCHAR text_data[] = {
 	    0x01, 0x03, 0x00, 0x00, 0x00, 0x02,
 	    0x00, // 0xC4
 	    0x00, // 0x0B
 	};
+	MDBA_USHORT crc16 = 0;
 	pcrc = text_data + sizeof(text_data) - 2;
-	int i = 0;
-	MDBA_USHORT crc16 = mdba_crc16(text_data, sizeof(text_data) - 2);
-	pcrc[0] = crc16 & 0xFF;
-	pcrc[1] = (crc16 >> 8) & 0xFF;
+
 	while (1) {
+		r = rand() % sizeof(slaveID);
+		spllog(2, "r=====: %d.", r) text_data[0] = slaveID[r];
+		crc16 = mdba_crc16(text_data, sizeof(text_data) - 2);
+
+		pcrc[0] = crc16 & 0xFF;
+		pcrc[1] = (crc16 >> 8) & 0xFF;
 		mdba_dump_byte(text_data, sizeof(text_data));
 		for (i = 0; i < number_of_ports; ++i) {
 			spllog(0, "port: %s", test_spsr_list_ports[i]);
@@ -329,7 +342,7 @@ test_try_to_write(void *arg)
 			    sizeof(text_data));
 		}
 #if 1
-		spl_sleep(10);
+		spl_sleep(1);
 #endif
 	}
 	return 0;
