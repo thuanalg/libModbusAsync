@@ -115,6 +115,64 @@ const MDBA_UCHAR mdba_byte_ON[] = {
 const MDBA_UCHAR mdba_byte_OFF[] = {0xFF - 0x01, 0xFF - 0x02, 0xFF - 0x04,
     0xFF - 0x08, 0xFF - 0x10, 0xFF - 0x20, 0xFF - 0x40, 0xFF - 0x80};
 /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
+// === BIT MACROS ===
+#define MDBA_SET_BIT(__x__, __n__)       ((__x__) |=  (1U << (__n__)))
+#define MDBA_SET_BIT_ARR(__x__, __n__)       ((__x__) |=  mdba_byte_ON[__n__])
+
+#define CLEAR_BIT(__x__, __n__)     ((__x__) &= ~(1U << (__n__)))
+#define CLEAR_BIT_ARR(__x__, __n__) ((__x__) &= mdba_byte_OFF[__n__])
+
+#define TOGGLE_BIT(__x__, __n__)    ((__x__) ^=  (1U << (__n__)))
+
+#define IS_BIT_SET(__x__, __n__)    (((__x__) >> (__n__)) & 1U)
+#define IS_BIT_SET_ARR(__x__, __n__) ((__x__) & mdba_byte_ON[__n__])
+
+#define IS_BIT_CLEAR(__x__, __n__)  (!(((__x__) >> (__n__)) & 1U))
+#define IS_BIT_CLEAR_ARR(__x__, __n__) ((__x__) & mdba_byte_OFF[__n__])
+
+// === BIT FIELD MACRO ===
+// Set bit n to val (0 or 1)
+#define ASSIGN_BIT(__x__, __n__, val) (__x__ = ((__x__ & ~(1U << (__n__))) | ((!!(val)) << (__n__))))
+
+// Extract bit range [start, start+len)
+#define EXTRACT_BITS(val, start, len) (((val) >> (start)) & ((1U << (len)) - 1))
+
+// === BYTE SWAP / ENDIAN ===
+//static inline uint16_t swap16(uint16_t x) {
+//    return (x << 8) | (x >> 8);
+//}
+//
+//static inline uint32_t swap32(uint32_t x) {
+//    return ((x & 0x000000FFU) << 24) |
+//           ((x & 0x0000FF00U) << 8)  |
+//           ((x & 0x00FF0000U) >> 8)  |
+//           ((x & 0xFF000000U) >> 24);
+//}
+//
+//// === BIT COUNT ===
+//static inline uint8_t count_bits(uint8_t x) {
+//    uint8_t count = 0;
+//    while (x) {
+//        count += x & 1U;
+//        x >>= 1;
+//    }
+//    return count;
+//}
+//
+//// === BIT REVERSE ===
+//static inline uint8_t reverse_bits(uint8_t b) {
+//    b = (b & 0xF0) >> 4 | (b & 0x0F) << 4;
+//    b = (b & 0xCC) >> 2 | (b & 0x33) << 2;
+//    b = (b & 0xAA) >> 1 | (b & 0x55) << 1;
+//    return b;
+//}
+//
+//// === MAKE UINT32 FROM 4 BYTES ===
+//static inline uint32_t make_uint32_be(uint8_t b0, uint8_t b1, uint8_t b2, uint8_t b3) {
+//    return ((uint32_t)b0 << 24) | ((uint32_t)b1 << 16) |
+//           ((uint32_t)b2 << 8)  | (uint32_t)b3;
+//}
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 
 /*Must be started before using. Thread-safe, but should be at a start of main
  * function.*/
