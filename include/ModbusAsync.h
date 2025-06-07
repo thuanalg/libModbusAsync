@@ -113,14 +113,14 @@ const MDBA_UCHAR mdba_byte_ON[] = {
     0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
 
 const MDBA_UCHAR mdba_byte_OFF[] = {
-	0xFF - 0x01, 
-	0xFF - 0x02, 
-	0xFF - 0x04,
-    0xFF - 0x08, 
-	0xFF - 0x10, 
-	0xFF - 0x20, 
-	0xFF - 0x40, 
-	0xFF - 0x80
+	~0x01, 
+	~0x02, 
+	~0x04,
+    ~0x08, 
+	~0x10, 
+	~0x20, 
+	~0x40, 
+	~0x80
 };
 
 const MDBA_UCHAR MDBA_BIT_REVERSE_TABLE[256] = {
@@ -151,23 +151,29 @@ const MDBA_UCHAR MDBA_BIT_REVERSE_TABLE[256] = {
 /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+*/
 // === BIT MACROS ===
 #define MDBA_SET_BIT(__x__, __n__)       ((__x__) |=  (1U << (__n__)))
-#define MDBA_SET_BIT_ARR(__x__, __n__)       ((__x__) |=  mdba_byte_ON[__n__])
+#define MDBA_SET_BIT_T(__x__, __n__)       ((__x__) |=  mdba_byte_ON[__n__])
 
 #define CLEAR_BIT(__x__, __n__)     ((__x__) &= ~(1U << (__n__)))
-#define CLEAR_BIT_ARR(__x__, __n__) ((__x__) &= mdba_byte_OFF[__n__])
+#define CLEAR_BIT_T(__x__, __n__) ((__x__) &= mdba_byte_OFF[__n__])
 
 #define TOGGLE_BIT(__x__, __n__)    ((__x__) ^=  (1U << (__n__)))
 #define TOGGLE_BIT(__x__, __n__) ((__x__) ^= mdba_byte_ON[__n__])
 
 #define IS_BIT_SET(__x__, __n__)    (((__x__) >> (__n__)) & 1U)
-#define IS_BIT_SET_ARR(__x__, __n__) ((__x__) & mdba_byte_ON[__n__])
+#define IS_BIT_SET_T(__x__, __n__) ((__x__) & mdba_byte_ON[__n__])
 
 #define IS_BIT_CLEAR(__x__, __n__)  (!(((__x__) >> (__n__)) & 1U))
-#define IS_BIT_CLEAR_ARR(__x__, __n__) ((__x__) & mdba_byte_OFF[__n__])
+#define IS_BIT_CLEAR_T(__x__, __n__) ((__x__) & mdba_byte_OFF[__n__])
 
 // === BIT FIELD MACRO ===
 // Set bit n to val (0 or 1)
 #define ASSIGN_BIT(__x__, __n__, val) (__x__ = ((__x__ & ~(1U << (__n__))) | ((!!(val)) << (__n__))))
+#define ASSIGN_BIT_T(__x__, __n__, val)                                        \
+	{                                                                      \
+		(__x__) =                                                      \
+		    ((val) ? ((__x__) | mdba_byte_ON[__n__])             \
+				 : ((__x__) & mdba_byte_OFF[__n__]));             \
+	}
 
 // Extract bit range [start, start+len)
 #define EXTRACT_BITS(val, start, len) (((val) >> (start)) & ((1U << (len)) - 1))
